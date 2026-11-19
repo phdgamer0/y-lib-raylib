@@ -1,3 +1,23 @@
+// raylib's KEY_* and Matrix clash with y-- names
+#define KEY_ENTER RAY_ENTER
+#define KEY_HOME RAY_HOME
+#define KEY_RIGHT RAY_RIGHT
+#define KEY_LEFT RAY_LEFT
+#define KEY_DOWN RAY_DOWN
+#define KEY_UP RAY_UP
+#define KEY_BACKSPACE RAY_BACKSPACE
+#define KEY_END RAY_END
+#define Matrix RaylibMatrix
+#include "raylib.h"
+#undef KEY_ENTER
+#undef KEY_HOME
+#undef KEY_RIGHT
+#undef KEY_LEFT
+#undef KEY_UP
+#undef KEY_DOWN
+#undef KEY_BACKSPACE
+#undef KEY_END
+#undef Matrix
 #include "ylang/vm.hpp"
 #include <iostream>
 
@@ -2182,4 +2202,3 @@ extern "C" void YlangLoadModule(std::shared_ptr<Env> env, const std::vector<std:
 		modVal.ref = moduleNamespace;
 		env->set("Raylib", modVal, false, false);
 	}
-}

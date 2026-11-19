@@ -9,8 +9,14 @@ FetchContent_Declare(
     URL https://github.com/raysan5/raylib/archive/919ad68c.zip
 )
 FetchContent_MakeAvailable(raylib)
+# y-- source tree to compile against; yenv passes its installed toolchain
+set(YLANG_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../y---lang" CACHE PATH "y-- source directory")
 add_library(y-raylib SHARED module.cpp)
-target_include_directories(y-raylib PRIVATE ../y---lang/include ../y---lang/src)
+# symbols come from the ymm process at load time
+if(APPLE)
+    target_link_options(y-raylib PRIVATE -undefined dynamic_lookup)
+endif()
+target_include_directories(y-raylib PRIVATE ${YLANG_DIR}/include ${YLANG_DIR}/include/ylang ${YLANG_DIR}/src)
 target_link_libraries(y-raylib PRIVATE raylib)
 if(NOT WIN32)
     find_package(OpenGL REQUIRED)
